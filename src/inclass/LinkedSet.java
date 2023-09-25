@@ -23,10 +23,13 @@ public class LinkedSet<K> implements Set<K> {
 
     @Override
     public boolean contains(K key) {
-        for (Node n = anchor; n != null; n = n.next)
-            if (n.key.equals(key))
-                return true;
-        return false;
+        Node n = anchor;
+        while (n != null && !n.key.equals(key)) {
+            // Invariant: none of the nodes preceding n contained the key
+            n = n.next;
+        }
+        assert n == null || n.key.equals(key);
+        return n != null;
     }
 
     @Override
