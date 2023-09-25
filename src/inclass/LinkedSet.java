@@ -25,7 +25,7 @@ public class LinkedSet<K> implements Set<K> {
     public boolean contains(K key) {
         Node n = anchor;
         while (n != null && !n.key.equals(key)) {
-            // Invariant: none of the nodes preceding n contained the key
+            // Invariant: none of the nodes preceding n contains the key
             n = n.next;
         }
         assert n == null || n.key.equals(key);
