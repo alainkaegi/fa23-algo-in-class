@@ -40,21 +40,21 @@ public class LinkedSet<K> implements Set<K> {
 
     @Override
     public void remove(K key) {
-        if (anchor == null) return;  // Empty set.
-        assert anchor != null;
+        if (anchor == null) return;  // Empty set
         if (anchor.key.equals(key)) {
-            // The first node holds of the key of interest.
             anchor = anchor.next;
             return;
         }
-        Node current = anchor;
-        assert current != null && !current.key.equals(key);
-        while (true) {
-            if (current.next == null) return;
-            if (current.next.key.equals(key)) break;
-            current = current.next;
+        assert anchor != null && !anchor.key.equals(key);
+        Node prev = anchor;
+        Node n = prev.next;
+        while (n != null && !n.key.equals(key)) {
+            // Invariant: none of the nodes preceding n contains the key
+            prev = n;
+            n = n.next;
         }
-        assert current != null && current.next != null && current.next.key.equals(key);
-        current.next = current.next.next;
+        if (n == null) return;  // Not found
+        assert prev != null && prev.next == n && n != null && n.key.equals(key);
+        prev.next = n.next;
     }
 }
