@@ -18,7 +18,8 @@ public class LinkedSet<K> implements Set<K> {
 
     @Override
     public void add(K key) {
-
+        if (contains(key)) return;
+        anchor = new Node(key, anchor);
     }
 
     @Override
