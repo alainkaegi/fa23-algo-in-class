@@ -27,7 +27,15 @@ public class ArraySet<K> implements Set<K> {
 
     @Override
     public void remove(K key) {
-
+        for (int i = 0; i < size; ++i) {
+            if (keys[i].equals((key))) {
+                keys[i] = keys[size - 1];
+                keys[size - 1] = null;  // do not keep an unnecessary reference to a deleted object
+                --size;
+                if (size > 0 && size == keys.length/4) resize(keys.length/2);
+                return;
+            }
+        }
     }
 
     private void resize(int newSize) {
